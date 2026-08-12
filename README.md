@@ -12,7 +12,7 @@ Therefore, the user should be careful not to interpret the ranking outputted by 
 
 **How it works**
 
-By and large, the screener calculates the score to award for each valuation metric by retrieving each company's value for the metric and applying inverted min-max normalisation to reward companies based on their relative performance. However, certain edge cases where peer comparison is not meaningful are handled via a manual point allocation. This means that each ranking displayed by the screener should be interpreted as a combination of comparative and rule-based scoring instead of being purely based on relative performance.
+By and large, the program calculates the score to award for each valuation metric by retrieving each company's value for the metric and applying inverted min-max normalisation to reward companies based on their relative performance. However, certain edge cases where peer comparison is not meaningful are handled via a manual point allocation. This means that each ranking displayed by the program should be interpreted as a combination of comparative and rule-based scoring instead of being purely based on relative performance.
 
 ## **Context**
 
@@ -88,7 +88,7 @@ Intention: reward companies trading at low valuations relative to their FCF. Unl
 
 ## **Program Logic Comments**
 
-Note: For the list of large-cap and mega-cap technology companies that the screener analyses, most of the edge-case logic is unlikely to be triggered and is simply included for practice.
+Note: For the list of large-cap and mega-cap technology companies that the program analyses, most of the edge-case logic is unlikely to be triggered and is simply included for practice.
 
 **Structure of Program**
 
@@ -146,7 +146,7 @@ Functions scoring metrics that can update totals without using inverted min-max 
 
 In display_results(), the code specifies 'Close' when retrieving prices for the user's chosen stock, but 'Closing Price (adj)' is used in the chart title. This is because newer versions of yfinance retrieve adjusted closing prices by default.
 
-## **Addressing Potential Screener Issues**
+## **Addressing Potential Issues**
 
 1. It is possible that issues with yfinance prevent stock information from being retrieved for any company. However, I have only encountered this issue once and it didn't last long. If it occurs, the program uses a try/except block to handle it without crashing.
 2. The normalised scoring system is sensitive to outliers. However, keeping the cross-company comparison within the technology sector attempts to reduce both the number and extent of outlying data.
