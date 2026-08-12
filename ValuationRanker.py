@@ -96,7 +96,7 @@ def display_results(both_weighting_final_scores, stock_tickers):
 #Get the metric values for all valid stock tickers across each valuation metric analysed by the program.  Get the total scores for each stock across both of the valuation metric weightings
 def calculate_total_stock_scores(stock_tickers_without_filtering):
     
-    #returns a dictionary of lists with the metric values for all valid stocks across each valuation metric used by the screener as well as a list of all the valid stock tickers
+    #returns a dictionary of lists with the metric values for all valid stocks across each valuation metric used by the program as well as a list of all the valid stock tickers
     all_values_for_each_metric, stock_tickers=retrieve_stock_information(stock_tickers_without_filtering)
 
     #initialises the totals for each of the two valuation metric weightings
@@ -155,7 +155,7 @@ def calculate_total_stock_scores(stock_tickers_without_filtering):
     #iterate for each of the two valuation metric weightings
     for valuation_metric_weighting in score_calculation_data:
         
-        #for the current valuation metric weighting, this inner loop automates the process of calling the scoring functions and updating the total score for each stock across all the valuation metrics analysed by the screener. 
+        #for the current valuation metric weighting, this inner loop automates the process of calling the scoring functions and updating the total score for each stock across all the valuation metrics analysed by the program. 
         for function_name, args in valuation_metric_weighting:
             function_name(*args)
     
@@ -166,7 +166,7 @@ def calculate_total_stock_scores(stock_tickers_without_filtering):
 def retrieve_stock_information(stock_tickers_without_filtering):
 
     # create a tuple of all the metrics that are analysed by the program
-    all_metrics_used_by_screener=(
+    all_metrics_used_by_program=(
         'ebitda',
         'enterpriseValue',
         'trailingPE',
@@ -180,7 +180,7 @@ def retrieve_stock_information(stock_tickers_without_filtering):
     )
     
     stock_tickers=[]
-    all_values_for_each_metric={metric: [] for metric in all_metrics_used_by_screener}        
+    all_values_for_each_metric={metric: [] for metric in all_metrics_used_by_program}        
 
     #for each stock in the unfiltered list, check whether its information dictionary can be retrieved and check that the information dictionary stores a finite numerical value for each metric used by the program
     for stock_ticker in stock_tickers_without_filtering: 
@@ -189,7 +189,7 @@ def retrieve_stock_information(stock_tickers_without_filtering):
             stock_ticker_info=Ticker(stock_ticker).info 
 
             #validation 2: the information dictionary stores a finite numerical value for each metric used by the program
-            if not all(isfinite(stock_ticker_info.get(metric)) for metric in all_metrics_used_by_screener):
+            if not all(isfinite(stock_ticker_info.get(metric)) for metric in all_metrics_used_by_program):
                 print(f"\n{stock_ticker} will not be considered by the program because it failed the validations required for the program to be able to analyse it.")
                 continue
             
