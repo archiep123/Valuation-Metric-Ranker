@@ -1,6 +1,6 @@
-**Introduction**
+## **Introduction**
 
-Use
+**Use**
 
 When searching for undervalued companies, I had a wide range of valuation metrics at my disposal. However, rather than relying on any single measure, I wanted to identify companies that appeared inexpensive across multiple, independent valuation metrics. This is because using a broader set of metrics reduces the risk that the result is driven by the quirks of any one measure.
 
@@ -10,91 +10,91 @@ It is important to recognise that a company with a low valuation can be a warnin
 
 Therefore, the user should be careful not to interpret the ranking outputted by the program as an ordering of companies from most to least undervalued. Instead, this program should be used as a tool to help sift for companies with relatively low valuations, after which users should conduct independent research into each high-ranking company's financial health, prospects, and current circumstances before determining whether its valuation represents a genuine opportunity.
 
-How it works
+**How it works**
 
 By and large, the screener calculates the score to award for each valuation metric by retrieving each company's value for the metric and applying inverted min-max normalisation to reward companies based on their relative performance. However, certain edge cases where peer comparison is not meaningful are handled via a manual point allocation. This means that each ranking displayed by the screener should be interpreted as a combination of comparative and rule-based scoring instead of being purely based on relative performance.
 
-**Context**
+## **Context**
 
-Data Source
+**Data Source**
 
 All valuation metric values are retrieved from Yahoo Finance using the yfinance Python library.
 
-Output
+**Output**
 
 The program outputs two separate rankings. The first displays the ranking of the companies when each of the seven valuation metrics contributes equally to the overall score. The second displays the ranking after the weighting is adjusted to put more emphasis on valuation metrics that are less biased against young, growing companies. The user is then given the option to view a line graph showing the 50DMA, 200DMA, and adjusted closing price over the past trading year for a company of their choice from the ranking tables.
 
 Note: After the user inputs the company for which they would like to see a line graph, an Excel file with the graph displayed on the active sheet should automatically open. However, this feature is platform-dependent and implemented for Windows only.
 
-**Metric Weighting**
+## **Metric Weighting**
 
-The Reason for Two Separate Rankings
+**The Reason for Two Separate Rankings**
 
 Five of the seven valuation metrics analysed by the program use a benchmark for valuation that incorporates the company's profitability or cash generation. Consequently, equally weighting the valuation metrics may introduce a bias against companies that are young and expanding. Companies at this stage typically prioritise capturing market share over profitability and cost control, meaning they are more likely to have high valuation multiples when valuation is measured relative to earnings, EBITDA, or free cash flow.
 
 By creating a second ranking that places greater emphasis on valuation multiples that measure valuation relative to the top line, the program can be used to support both value-investing and growth-investing approaches. The first ranking is more likely to favour established companies with stronger profitability and cash generation, making it more suitable for value investors. In contrast, the second ranking increases the likelihood of identifying high-growth companies by emphasising the focus on valuation relative to sales performance, making it more relevant to growth investors.
 
-Weighting Diagram
+**Weighting Diagram**
 
 - Balanced Valuation Score(100%)
-  - Trailing P/E --------─┐
-  - Forward P/E ┤
-  - Price to Free Cash Flow ┤
-  - Trailing P/EG ┤---> (1/7 of Balanced Valuation Score)
-  - EV / EBITDA ┤
-  - Price to Sales ┤
-  - EV / Revenue -----------┘
+  - Trailing P/E------------─┐
+  - Forward P/E-------------┤
+  - Price to Free Cash Flow-┤
+  - Trailing P/EG------------┤---> (1/7 of Balanced Valuation Score)
+  - EV / EBITDA-------------┤
+  - Price to Sales------------┤
+  - EV / Revenue------------┘
 
 - Growth-adjusted Valuation Score (100%)
-  - Trailing P/E ------------------┐
-  - Forward P/E ┤
-  - Price to Free Cash Flow ┤---> (3/25 of Growth-adjusted Valuation Score)
-  - Trailing P/EG ┤
-  - EV / EBITDA ----------------------┘
-  - Price to Sales -----------------┐
-  - EV / Revenue ------------------┘-----> (1/5 of Growth-adjusted Valuation Score)
+  - Trailing P/E------------------------┐
+  - Forward P/E-----------------------┤
+  - Price to Free Cash Flow-----------┤---> (3/25 of Growth-adjusted Valuation Score)
+  - Trailing P/EG----------------------┤
+  - EV / EBITDA-----------------------┘
+  - Price to Sales------------------┐
+  - EV / Revenue------------------┘-----> (1/5 of Growth-adjusted Valuation Score)
 
-**Metric Insights**
+## **Metric Insights**
 
-Metric Selection
+**Metric Selection**
 
 Certain valuation metrics analysed by the program may disproportionately benefit specific companies depending on their stage of progression and subsector. For example, an EBITDA-based valuation metric may favour capital-intensive companies such as TSMC by excluding D&A. This can be a significant expense for companies with large bases of depreciable or amortisable assets, leading to lower EV/EBITDA values.
 
 However, it should be made clear that the valuation metrics analysed by the program are not intended to be unbiased across all companies. Instead, the program aims to use a broad enough range of valuation metrics to smooth out any resulting inequalities.
 
-Metric Justification
+**Metric Justification**
 
-**Trailing P/E, Forward P/E:**
+Trailing P/E, Forward P/E:
 
 Intention: reward companies trading at low valuations relative to their current and forecast earnings. This may seem counterintuitive because a low P/E can imply that the market has low expectations for future company growth. However, it is possible that a company has a low P/E because its growth has not yet been fully priced by the market.
 
-**Trailing P/EG:**
+Trailing P/EG:
 
 Intention: reward companies trading at low valuations relative to their current earnings, adjusting for expected earnings growth. Assessing a company's P/EG ratio complements an assessment of its P/E. This is because the P/EG helps to separate a company whose P/E is low because the market expects weak or declining earnings growth from a company whose P/E is low despite expectations of strong future performance.
 
-**P/S, EV/R:**
+P/S, EV/R:
 
 Intention: reward companies trading at low valuations relative to their total annual revenue. As discussed, valuation metrics that assess valuation relative to revenue provide an insight that isn't fully captured by those that use profitability or cash-flow measures as their valuation benchmark. By focussing on revenue, these metrics aren't influenced by the company's current cost structure and profitability, making them particularly useful when assessing companies invested heavily in growth.
 
 Note: EV/R is used distinctly from P/S because it incorporates debt and cash positions to assess valuation in terms of the company's total value, rather than just the market value of equity.
 
-**EV/EBITDA:**
+EV/EBITDA:
 
 Intention: reward companies whose enterprise value is low relative to their EBITDA. When calculating EBITDA, core operating costs such as SG&A and COGS are accounted for, but financing, taxation, and D&A are not. By not taking into account D&A and financing decisions, which have a less direct relationship with operating performance than SG&A and COGS, EBITDA can be used as a proxy for the profitability of a company's core operations. Therefore, EV/EBITDA can be viewed as an assessment of a company's valuation relative to a core operating profitability proxy. However, as previously alluded to, some individuals dispute the reliability of interpreting EBITDA in this way. This is because, given that D&A is not accounted for, differences in EV/EBITDA between companies can reflect a variation in the size of their depreciable or amortisable asset bases as much as differences in their operating profitability.
 
-**P/FCF:**
+P/FCF:
 
 Intention: reward companies trading at low valuations relative to their FCF. Unlike earnings-based metrics, FCF is derived directly from cash movements rather than accounting accruals, making it less susceptible to accounting manipulation. Additionally, unlike the EV/EBITDA, FCF accounts for capital expenditure. A company with a low P/FCF is inexpensively valued relative to the free cash it generates. This may indicate that the market has not fully priced the company's cash-generating ability, although it may also reflect expectations that its current level of free cash flow will decline.
 
-**Program Logic Comments**
+## **Program Logic Comments**
 
 Note: For the list of large-cap and mega-cap technology companies that the screener analyses, most of the edge-case logic is unlikely to be triggered and is simply included for practice.
 
-Structure of Program
+**Structure of Program**
 
 The program is arranged to have functions that get user inputs and display results first. The functions used to calculate and compare the overall scores come next, separated by a large section of white space. The 'main' section at the end of the program defines the list of large-cap and mega-cap technology companies analysed by the program and makes the function calls required for the program to run.
 
-Why Implement Scoring Edge Cases?
+**Why Implement Scoring Edge Cases?**
 
 All of the valuation metrics analysed by the program except P/S have the potential to be negative. If this occurs, the score awarded using inverted min-max normalisation becomes inconsistent and, therefore, cannot be used to update the company's total. For example, if a company has a negative P/E, it will receive a higher score than the company with the smallest positive P/E. However, from a valuation perspective, the negative P/E company is likely to be more comparable to the company with the highest P/E, which receives the minimum score. Consequently, separate treatment of negative values is necessary in the functions that score these valuation metrics.
 
@@ -102,11 +102,11 @@ The program deals with each negative value by mapping it to its closest scorable
 
 It could be argued that this treatment is too lenient and that companies with negative E should receive a point deduction. In the previous example, the companies with negative E are potentially even weaker valuation opportunities than those with a very low positive E. The reason that the program chooses not to implement point deductions is because the P/E also depends on P. If penalisation were used, a company with a slightly negative E and very low P would lose points relative to a company with a very low positive E and very high P. However, based on an economic interpretation of the situation, the company with the negative E is likely the more attractive valuation opportunity.
 
-The Caveat of Financial Ratios
+**The Caveat of Financial Ratios**
 
 A limitation of using financial ratios is the case where the numerator is zero. When this occurs, some information about the denominator's magnitude is lost because the ratio becomes fixed at zero regardless of the denominator's value (assuming the denominator is non-zero). However, unlike cases where the numerator and/or denominator is negative, this case does not require separate scoring. This is because the ratio remains continuous, consistent in direction with the rest of the metric's values and predictable in behaviour. It is therefore treated as an inherent limitation of the metric rather than a scoring system edge case.
 
-Breakdown of Edge Case Handling
+**Breakdown of Edge Case Handling**
 
 In score_for_pe(), the following logic is applied when handling P/E values with a negative E:
 
@@ -132,21 +132,21 @@ In score_for_price_to_fcf(), the following logic is applied when handling P/FCF 
 
 If the P/FCF is negative or undefined, the FCF must be non-positive because the numerator can be assumed to be positive. For the same reason as when scoring the P/E, each non-positive FCF is treated as a very low positive FCF, making the P/FCF a very high value because P is non-extremised and greater than zero. Therefore, when FCF is non-positive, the P/FCF is treated as a very high value and receives the minimum score.
 
-Discrepancy between P/FCF, P/E and P/EG
+**Discrepancy between P/FCF, P/E and P/EG**
 
 The P/E and P/EG edge-case handling only considered negative denominators, which create invalid ratios for inverted min-max normalisation and, therefore, require treatment as their nearest scorable values. However, zero denominators also create invalid ratios for inverted min-max normalisation, and there is no less reason to treat them as their nearest scorable values than negative denominators. The reason that the zero-denominator case is not considered is that the P/E and P/EG are calculated by a third party that returns 'Infinity' each time division by zero takes place. Since all infinite metric values are filtered out at the data retrieval stage, consideration of the zero-denominator case is unnecessary.
 
 On the other hand, the P/FCF is calculated in-house. This means that both zero and negative denominators can be considered as the denominators that create invalid ratios for scoring and, therefore, must be treated as their nearest scorable values.
 
-Cases with One Positive/Defined Value
+**Cases with One Positive/Defined Value**
 
 Functions where totals can be manually updated have the potential to only pass the metric value for one company into 'assign_scores_to_stocks()'. When this occurs, the company's total is manually incremented by 0.5 points. This was chosen as a balanced score to allocate to the company given that the relative performance of its metric value cannot be assessed because there are no other values to compare it against.
 
-Adjusted Closing Price Clarification
+**Adjusted Closing Price Clarification**
 
 In display_results(), the code specifies 'Close' when retrieving prices for the user's chosen stock, but 'Closing Price (adj)' is used in the chart title. This is because newer versions of yfinance retrieve adjusted closing prices by default.
 
-**Addressing Potential Screener Issues**
+## **Addressing Potential Screener Issues**
 
 1. It is possible that issues with yfinance prevent stock information from being retrieved for any company. However, I have only encountered this issue once and it didn't last long. If it occurs, the program uses a try/except block to handle it without crashing.
 2. The normalised scoring system is sensitive to outliers. However, keeping the cross-company comparison within the technology sector attempts to reduce both the number and extent of outlying data.
