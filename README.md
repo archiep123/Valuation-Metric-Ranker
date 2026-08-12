@@ -96,11 +96,11 @@ The program is arranged to have functions that get user inputs and display resul
 
 **Why Implement Scoring Edge Cases?**
 
-All of the valuation metrics analysed by the program except P/S have the potential to be negative. If this occurs, the score awarded using inverted min-max normalisation becomes inconsistent and, therefore, cannot be used to update the company's total. For example, if a company has a negative P/E, it will receive a higher score than the company with the smallest positive P/E. However, from a valuation perspective, the negative P/E company is likely to be more comparable to the company with the highest P/E, which receives the minimum score. Consequently, separate treatment of negative values is necessary in the functions that score these valuation metrics.
+All of the valuation metrics analysed by the program except P/S have the potential to be negative. If this occurs, the score awarded using inverted min-max normalisation becomes inconsistent. For example, if a company has a negative P/E, it will receive a higher score than the company with the smallest positive P/E. However, from a valuation perspective, the negative P/E company is likely to be more comparable to the company with the highest P/E, which receives the minimum score. Therefore, separate treatment of negative values is necessary in the functions that score these valuation metrics.
 
 The program deals with each negative value by mapping it to its closest scorable value. For example, when scoring the P/E for a company with a negative E, it's treated as though it has a very small positive E because this is the nearest value of E for which scoring is valid. Since P can be assumed positive and non-extremised, a company with a very small positive E would have a very high P/E and, hence, receive a very low score. Accordingly, companies with negative E are assigned the minimum score for their P/E.
 
-It could be argued that this treatment is too lenient and that companies with negative E should receive a point deduction. In the previous example, the companies with negative E are potentially even weaker valuation opportunities than those with a very low positive E. The reason that the program chooses not to implement point deductions is because the P/E also depends on P. If penalisation were used, a company with a slightly negative E and very low P would lose points relative to a company with a very low positive E and very high P. However, based on an economic interpretation of the situation, the company with the negative E is likely the more attractive valuation opportunity.
+It could be argued that this treatment is too lenient and that companies with a negative E should receive a point deduction. In the previous example, the companies with a negative E are potentially even weaker valuation opportunities than those with a very low positive E. The reason that the program chooses not to implement point deductions is because the P/E also depends on P. If penalisation were used, a company with a slightly negative E and very low P would lose points relative to a company with a very low positive E and very high P. However, based on an economic interpretation of the situation, the company with the negative E is likely the more attractive valuation opportunity.
 
 **The Caveat of Financial Ratios**
 
@@ -130,7 +130,7 @@ There are three cases for EV/EBITDA that require separate handling: negative EV 
 
 In score_for_price_to_fcf(), the following logic is applied when handling P/FCF values with a non-positive FCF:
 
-If the P/FCF is negative or undefined, the FCF must be non-positive because the numerator can be assumed to be positive. For the same reason as when scoring the P/E, each non-positive FCF is treated as a very low positive FCF, making the P/FCF a very high value because P is non-extremised and greater than zero. Therefore, when FCF is non-positive, the P/FCF is treated as a very high value and receives the minimum score.
+If the P/FCF is negative or undefined, the FCF must be non-positive because the numerator can be assumed to be positive. For the same reason as when scoring the P/E, each non-positive FCF is treated as a very low positive FCF, making the P/FCF a very high value. Therefore, when FCF is non-positive, the P/FCF is treated as a very high value and receives the minimum score.
 
 **Discrepancy between P/FCF, P/E and P/EG**
 
@@ -138,9 +138,9 @@ The P/E and P/EG edge-case handling only considered negative denominators, which
 
 On the other hand, the P/FCF is calculated in-house. This means that both zero and negative denominators can be considered as the denominators that create invalid ratios for scoring and, therefore, must be treated as their nearest scorable values.
 
-**Cases with One Positive/Defined Value**
+**Cases with One Metric Value for Normalisation**
 
-Functions where totals can be manually updated have the potential to only pass the metric value for one company into 'assign_scores_to_stocks()'. When this occurs, the company's total is manually incremented by 0.5 points. This was chosen as a balanced score to allocate to the company given that the relative performance of its metric value cannot be assessed because there are no other values to compare it against.
+Functions scoring metrics that can update totals without using inverted min-max normalisation have the potential to only pass the metric value for one company into 'assign_scores_to_stocks()'. When this occurs, the company's total is manually incremented by 0.5 points. This was chosen as a balanced score to allocate to the company given that the relative performance of its metric value cannot be assessed because there are no other values to compare it against.
 
 **Adjusted Closing Price Clarification**
 
