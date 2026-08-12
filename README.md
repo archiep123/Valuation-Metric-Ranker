@@ -45,14 +45,14 @@ By creating a second ranking that places greater emphasis on valuation multiples
   - Price to Sales------------┤
   - EV / Revenue------------┘
 
-- Growth-adjusted Valuation Score (100%)
+- Growth-Adjusted Valuation Score (100%)
   - Trailing P/E------------------------┐
   - Forward P/E-----------------------┤
-  - Price to Free Cash Flow-----------┤---> (3/25 of Growth-adjusted Valuation Score)
+  - Price to Free Cash Flow-----------┤---> (3/25 of Growth-Adjusted Valuation Score)
   - Trailing P/EG----------------------┤
   - EV / EBITDA-----------------------┘
   - Price to Sales------------------┐
-  - EV / Revenue------------------┘-----> (1/5 of Growth-adjusted Valuation Score)
+  - EV / Revenue------------------┘-----> (1/5 of Growth-Adjusted Valuation Score)
 
 ## **Metric Insights**
 
