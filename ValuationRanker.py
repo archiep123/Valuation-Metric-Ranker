@@ -248,7 +248,7 @@ def assign_scores_to_stocks(accumulating_score_for_valuation_metric_weighting, a
         for index, stock_metric_value in zip(indices_for_total_update, all_stock_metric_values):
                 accumulating_score_for_valuation_metric_weighting[index]+=(1-(stock_metric_value-min_metric_value_across_stocks)/normalisation_range)*weighting
         
-   #if only one stock is being scored using normalisation, min-max normalisation cannot be applied because the normalisation range would be zero. Therefore, the stock's total is manually incremented by 0.5 points instead. Whenever 'indices_for_total_update' is None, 'num_valid_stocks' is equal to the total number
+   #if only one stock is being scored using normalisation, min-max normalisation cannot be applied because the normalisation range would be zero. Therefore, the stock's total is manually incremented by 0.5 points instead. Note: whenever 'indices_for_total_update' is None, 'num_valid_stocks' is equal to the total number
     #of stocks being analysed by the program and 'retrieve_stock_information' forces this total to be >=5. Thus, 'elif num_valid_stocks == 1' will never execute when indices_for_total_update is None.
     elif num_valid_stocks == 1:
         accumulating_score_for_valuation_metric_weighting[indices_for_total_update[0]]+=(0.5*weighting)   
